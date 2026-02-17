@@ -9,10 +9,10 @@ const links = [
 ];
 ---
 
-<nav class="fixed top-8 left-0 right-0 z-50 flex justify-center pointer-events-none px-6">
+<nav class="fixed top-8 left-0 right-0 z-50 flex justify-center pointer-events-none px-6 reveal-pop">
   <div class="flex items-center gap-2 p-1.5 rounded-full pointer-events-auto bg-white/5 border border-white/10 backdrop-blur-2xl">
     <div class="px-6 border-r border-white/10 flex items-center h-full">
-      <span class="text-[10px] font-black uppercase tracking-[0.4em] text-white/80">
+      <span class="reveal-text text-[10px] font-black uppercase tracking-[0.4em] text-white/80">
         {DATA.profile.initials}
       </span>
     </div>
@@ -20,9 +20,9 @@ const links = [
       {links.map((link) => (
         <a
           href={link.href}
-          class="px-6 py-2.5 rounded-full hover:bg-white/10 active:scale-95 transition-all group relative overflow-hidden"
+          class="reveal-pop px-6 py-2.5 rounded-full hover:bg-white/10 active:scale-95 transition-all group relative overflow-hidden"
         >
-          <span class="text-[9px] font-bold uppercase tracking-[0.4em] text-white/40 group-hover:text-white transition-all duration-300 relative z-10">
+          <span class="reveal-text text-[9px] font-bold uppercase tracking-[0.4em] text-white/40 group-hover:text-white transition-all duration-300 relative z-10">
             {link.label}
           </span>
           <div class="absolute inset-0 bg-linear-to-t from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>

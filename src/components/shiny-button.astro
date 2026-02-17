@@ -4,7 +4,7 @@ const Tag = href ? "a" : "button";
 const rel = href && target === "_blank" ? "noopener noreferrer" : undefined;
 ---
 
-<div class="relative inline-block" data-shiny-button>
+<div class="relative inline-block reveal-pop" data-shiny-button>
   <div
     class="absolute pointer-events-none w-40 h-40 blur-3xl rounded-full z-0"
     data-shiny-external
@@ -17,7 +17,7 @@ const rel = href && target === "_blank" ? "noopener noreferrer" : undefined;
     target={target}
     rel={rel}
     type={href ? undefined : "button"}
-    class={`group relative bg-white px-10 py-4 rounded-full transition-transform active:scale-95 flex items-center justify-center border border-black/5 ${className}`}
+    class={`group relative bg-white px-10 py-4 rounded-full transition-transform active:scale-95 flex items-center justify-center border border-black/5 ${className} reveal-pop`}
   >
     <div class="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
       <div
@@ -27,7 +27,7 @@ const rel = href && target === "_blank" ? "noopener noreferrer" : undefined;
       ></div>
     </div>
 
-    <span class="relative z-10 text-[#064e3b] font-black text-[11px] uppercase tracking-[0.2em] flex items-center gap-2 pointer-events-none">
+    <span class="reveal-text relative z-10 text-[#064e3b] font-black text-[11px] uppercase tracking-[0.2em] flex items-center gap-2 pointer-events-none">
       <slot />
     </span>
   </Tag>

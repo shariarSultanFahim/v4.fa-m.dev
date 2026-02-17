@@ -4,12 +4,13 @@ import { DATA } from "@/data/content";
 const year = new Date().getFullYear();
 ---
 
-<footer class="border-t border-white/10 py-20 text-center">
+<footer class="py-20 text-center">
+  <div class="animated-separator h-px w-full bg-white/10 mb-16 origin-left"></div>
   <div class="space-y-4 opacity-60 hover:opacity-100 transition-opacity duration-700">
-    <p class="text-white text-[10px] tracking-[0.5em] uppercase font-bold font-accent">
+    <p class="reveal-text text-white text-[10px] tracking-[0.5em] uppercase font-bold font-accent">
       Architected by {DATA.profile.firstName}
     </p>
-    <p class="text-white/40 text-[8px] tracking-[0.3em] uppercase font-accent">
+    <p class="reveal-text text-white/40 text-[8px] tracking-[0.3em] uppercase font-accent">
       Logic - Precision - Performance - {year}
     </p>
   </div>

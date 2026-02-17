@@ -3,19 +3,20 @@ import { DATA } from "@/data/content";
 import ShinyButton from "@/components/shiny-button.astro";
 ---
 
-<section class="py-24 border-t border-white/10">
+<section class="py-24">
+  <div class="animated-separator h-px w-full bg-white/10 mb-16 origin-left"></div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
     <div>
-      <h3 class="text-3xl md:text-5xl font-display font-bold leading-[1.1] tracking-tight">
+      <h3 class="reveal-text text-3xl md:text-5xl font-display font-bold leading-[1.1] tracking-tight">
         {DATA.branding.title}
       </h3>
     </div>
     <div class="space-y-8 pt-4">
-      <p class="text-gray-400 text-xl leading-relaxed font-light">
+      <p class="reveal-text text-gray-400 text-xl leading-relaxed font-light">
         {DATA.branding.description}
       </p>
       <div class="flex gap-4">
-        <ShinyButton href={DATA.profile.github} target="_blank">
+        <ShinyButton href={DATA.profile.github} target="_blank" className="reveal-pop">
           Review My Code
         </ShinyButton>
       </div>
@@ -25,7 +26,7 @@ import ShinyButton from "@/components/shiny-button.astro";
   <div class="mt-24 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-16 gap-x-12 items-center justify-items-center opacity-40">
     {DATA.branding.brands.map((brand) => (
       <div
-        class="text-[10px] md:text-xs font-display font-medium text-white/50 hover:text-white transition-all duration-700 cursor-default uppercase tracking-[0.3em]"
+        class="reveal-text text-[10px] md:text-xs font-display font-medium text-white/50 hover:text-white transition-all duration-700 cursor-default uppercase tracking-[0.3em]"
       >
         {brand}
       </div>
