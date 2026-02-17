@@ -1,13 +1,16 @@
 ---
-import { DATA } from "@/data/content";
 import ShinyButton from "@/components/shiny-button.astro";
+import { DATA } from "@/data/content";
 ---
 
-<section class="py-24">
-  <div class="animated-separator h-px w-full bg-white/10 mb-16 origin-left"></div>
+<section class="py-16 md:py-20 lg:py-24">
+  <div class="animated-separator h-px w-full bg-white/10 mb-16 origin-left">
+  </div>
   <div class="grid grid-cols-1 md:grid-cols-2 gap-20 items-start">
     <div>
-      <h3 class="reveal-text text-3xl md:text-5xl font-display font-bold leading-[1.1] tracking-tight">
+      <h3
+        class="reveal-text text-3xl md:text-5xl font-display font-bold leading-[1.1] tracking-tight"
+      >
         {DATA.branding.title}
       </h3>
     </div>
@@ -16,20 +19,26 @@ import ShinyButton from "@/components/shiny-button.astro";
         {DATA.branding.description}
       </p>
       <div class="flex gap-4">
-        <ShinyButton href={DATA.profile.github} target="_blank" className="reveal-pop">
+        <ShinyButton
+          href={DATA.profile.github}
+          target="_blank"
+          className="reveal-pop"
+        >
           Review My Code
         </ShinyButton>
       </div>
     </div>
   </div>
 
-  <div class="mt-24 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-16 gap-x-12 items-center justify-items-center opacity-40">
-    {DATA.branding.brands.map((brand) => (
-      <div
-        class="reveal-text text-[10px] md:text-xs font-display font-medium text-white/50 hover:text-white transition-all duration-700 cursor-default uppercase tracking-[0.3em]"
-      >
-        {brand}
-      </div>
-    ))}
+  <div
+    class="mt-24 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-y-16 gap-x-12 items-center justify-items-center opacity-40"
+  >
+    {
+      DATA.branding.brands.map((brand) => (
+        <div class="reveal-text text-[10px] md:text-xs font-display font-medium text-white/50 hover:text-white transition-all duration-700 cursor-default uppercase tracking-[0.3em]">
+          {brand}
+        </div>
+      ))
+    }
   </div>
 </section>

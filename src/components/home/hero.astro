@@ -2,45 +2,68 @@
 import { DATA } from "@/data/content";
 ---
 
-<section class="relative min-h-[80vh] flex flex-col items-center justify-center text-center py-20 overflow-hidden">
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] blur-[160px] rounded-full -z-10"></div>
+<section
+  id="hero"
+  class="relative min-h-[80vh] flex flex-col items-center justify-center text-center py-16 md:py-20 lg:py-20 overflow-hidden"
+>
+  <div
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] blur-[160px] rounded-full -z-10"
+  >
+  </div>
 
   <div class="max-w-6xl px-6 w-full space-y-12">
     <div class="flex items-center justify-center gap-4">
-      <div class="animated-separator h-px w-6 bg-green-500/40 origin-left"></div>
-      <span class="reveal-text text-green-500 tracking-[0.5em] text-[10px] font-bold uppercase font-accent">
+      <div class="animated-separator h-px w-6 bg-green-500/40 origin-left">
+      </div>
+      <span
+        class="reveal-text text-green-500 tracking-[0.5em] text-[10px] font-bold uppercase font-accent"
+      >
         {DATA.profile.role}
       </span>
-      <div class="animated-separator h-px w-6 bg-green-500/40 origin-left"></div>
+      <div class="animated-separator h-px w-6 bg-green-500/40 origin-left">
+      </div>
     </div>
 
-    <h1 class="reveal-pop text-6xl md:text-8xl lg:text-[10rem] uppercase font-brand tracking-normal leading-[0.85] select-none">
-      <span class="reveal-pop bg-linear-to-b from-white via-white to-white/50 bg-clip-text text-transparent">
+    <h1
+      class="reveal-pop text-6xl md:text-8xl lg:text-[10rem] uppercase font-brand tracking-normal leading-[0.85] select-none"
+    >
+      <span
+        class="reveal-pop bg-linear-to-b from-white via-white to-white/50 bg-clip-text text-transparent"
+      >
         {DATA.profile.firstName}
       </span>
     </h1>
 
     <div class="max-w-3xl mx-auto space-y-8 pt-4">
-      <h2 class="reveal-text text-white text-2xl md:text-4xl font-display font-medium leading-tight tracking-tight">
+      <h2
+        class="reveal-text text-white text-2xl md:text-4xl font-display font-medium leading-tight tracking-tight"
+      >
         {DATA.profile.tagline}
       </h2>
 
-      <div class="animated-separator h-px w-12 bg-white/10 mx-auto my-6 origin-left"></div>
+      <div
+        class="animated-separator h-px w-12 bg-white/10 mx-auto my-6 origin-left"
+      >
+      </div>
 
-      <p class="reveal-text text-gray-400 text-lg md:text-xl leading-relaxed max-w-xl mx-auto font-light">
+      <p
+        class="reveal-text text-gray-400 text-lg md:text-xl leading-relaxed max-w-xl mx-auto font-light"
+      >
         {DATA.profile.description}
       </p>
     </div>
 
     <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 pt-6">
-      {DATA.profile.tags.map((tag) => (
-        <div class="flex items-center gap-3">
-          <span class="reveal-text text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 font-accent">
-            {tag}
-          </span>
-          <div class="w-1 h-1 rounded-full bg-green-500/30"></div>
-        </div>
-      ))}
+      {
+        DATA.profile.tags.map((tag) => (
+          <div class="flex items-center gap-3">
+            <span class="reveal-text text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 font-accent">
+              {tag}
+            </span>
+            <div class="w-1 h-1 rounded-full bg-green-500/30" />
+          </div>
+        ))
+      }
     </div>
   </div>
 </section>

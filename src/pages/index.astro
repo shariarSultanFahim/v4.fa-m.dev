@@ -1,23 +1,24 @@
 ---
 import MainLayout from "@/layouts/main/main.layout.astro";
 
-import Navbar from "@/components/home/navbar.astro";
-import Hero from "@/components/home/hero.astro";
 import About from "@/components/home/about.astro";
 import BrandingSection from "@/components/home/branding-section.astro";
-import Skills from "@/components/home/skills.astro";
-import ServicesGrid from "@/components/home/services-grid.astro";
-import Experience from "@/components/home/experience.astro";
-import Projects from "@/components/home/projects.astro";
 import Contact from "@/components/home/contact.astro";
+import Experience from "@/components/home/experience.astro";
 import Footer from "@/components/home/footer.astro";
+import Hero from "@/components/home/hero.astro";
+import Projects from "@/components/home/projects.astro";
+import ServicesGrid from "@/components/home/services-grid.astro";
+import Skills from "@/components/home/skills.astro";
 ---
 
 <MainLayout>
   <div class="min-h-screen selection:bg-green-500/40">
-    <Navbar />
+    <!-- <Navbar /> -->
 
-    <main class="max-w-7xl mx-auto px-6 pt-24 pb-32 space-y-32 md:space-y-48">
+    <main
+      class="max-w-7xl mx-auto px-6 pb-20 lg:pb-32 space-y-32 md:space-y-48"
+    >
       <Hero />
       <About />
       <BrandingSection />
