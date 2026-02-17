@@ -2,14 +2,14 @@
 
 @theme default {
   /* Colors */
-  --color-background: #010510;
-  --color-foreground: #f5f5f5;
-  --color-accent: #f53f06;
-  --color-muted: var(--color-slate-600);
+  --color-background: #050505;
+  --color-foreground: #ffffff;
+  --color-accent: #22c55e;
+  --color-muted: #9ca3af;
 
   /* Fonts */
-  --font-sans: "ClashDisplay", sans-serif;
-  --font-serif: "Sharpie", serif;
+  --font-sans: "Outfit", sans-serif;
+  --font-serif: "Syne", sans-serif;
 
   /* Responsive Variables */
   --max-hero-image-width: max(28vw, 400px);

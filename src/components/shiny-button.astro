@@ -1,0 +1,93 @@
+---
+const { href, target, className = "", onClick } = Astro.props;
+const Tag = href ? "a" : "button";
+const rel = href && target === "_blank" ? "noopener noreferrer" : undefined;
+---
+
+<div class="relative inline-block" data-shiny-button>
+  <div
+    class="absolute pointer-events-none w-40 h-40 blur-3xl rounded-full z-0"
+    data-shiny-external
+    style="background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(34,197,94,0.4) 30%, rgba(34,197,94,0.1) 60%, rgba(34,197,94,0) 80%); opacity: 0.4;"
+  ></div>
+
+  <Tag
+    data-shiny-target
+    href={href}
+    target={target}
+    rel={rel}
+    type={href ? undefined : "button"}
+    class={`group relative bg-white px-10 py-4 rounded-full transition-transform active:scale-95 flex items-center justify-center border border-black/5 ${className}`}
+  >
+    <div class="absolute inset-0 overflow-hidden rounded-full pointer-events-none">
+      <div
+        class="absolute w-32 h-32 blur-2xl rounded-full z-0"
+        data-shiny-internal
+        style="background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(34,197,94,0.4) 30%, rgba(34,197,94,0.1) 60%, rgba(34,197,94,0) 80%); opacity: 0.4;"
+      ></div>
+    </div>
+
+    <span class="relative z-10 text-[#064e3b] font-black text-[11px] uppercase tracking-[0.2em] flex items-center gap-2 pointer-events-none">
+      <slot />
+    </span>
+  </Tag>
+</div>
+
+<script>
+  import { gsap } from "@/configs/gsap.config";
+
+  const roots = document.querySelectorAll("[data-shiny-button]");
+
+  roots.forEach((root) => {
+    const button = root.querySelector("[data-shiny-target]");
+    const internalLight = root.querySelector("[data-shiny-internal]");
+    const externalGlow = root.querySelector("[data-shiny-external]");
+
+    const setupGlow = (el: gsap.TweenTarget) => {
+      if (!el) return;
+      gsap.set(el, {
+        xPercent: -50,
+        yPercent: -50,
+        left: "15%",
+        top: "50%",
+        opacity: 0.4,
+      });
+    };
+
+    setupGlow(internalLight);
+    setupGlow(externalGlow);
+
+    if (!button) return;
+
+    button.addEventListener("mousemove", (event) => {
+      const rect = button.getBoundingClientRect();
+      const mouseEvent = event as MouseEvent;
+      const x = mouseEvent.clientX - rect.left;
+      const y = mouseEvent.clientY - rect.top;
+
+      const moveConfig = {
+        left: x,
+        top: y,
+        duration: 0.4,
+        ease: "power2.out",
+        opacity: 0.4,
+      };
+
+      if (internalLight) gsap.to(internalLight, moveConfig);
+      if (externalGlow) gsap.to(externalGlow, moveConfig);
+    });
+
+    button.addEventListener("mouseleave", () => {
+      const resetConfig = {
+        left: "15%",
+        top: "50%",
+        duration: 0.8,
+        ease: "power3.inOut",
+        opacity: 0.4,
+      };
+
+      if (internalLight) gsap.to(internalLight, resetConfig);
+      if (externalGlow) gsap.to(externalGlow, resetConfig);
+    });
+  });
+</script>

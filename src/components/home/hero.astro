@@ -1,74 +1,46 @@
 ---
-import Noise from "@/components/noise.astro";
-import { Icon } from "astro-icon/components";
+import { DATA } from "@/data/content";
 ---
 
-<hero-section>
-  <section class="full-screen flex flex-row gap-16" id="hero-section">
-    <section
-      class="hidden lg:inline h-full w-full max-w-(--max-hero-image-width) mask-b-from-background relative bg-accent overflow-hidden"
-      id="hero-image-container"
-    >
-      <img
-        src="/cover-transparent-bg.png"
-        class="h-screen scale-110 absolute w-max object-center object-cover mix-blend-multiply"
-      />
-      <Noise />
-    </section>
-    <section class="h-full flex flex-col gap-4 justify-end items-start pb-16">
-      <p class="numeric-caption"># 001</p>
-      <h1 class="text-9xl font-black">
-        tam<strong>.</strong>
-      </h1>
-      <p>
-        Digital Creator and Software Engineer based in Bangladesh, passionate
-        about crafting digital products that solve real-world problems. I
-        specialize in building scalable, maintainable, and user-friendly
-        software solutions.
+<section class="relative min-h-[80vh] flex flex-col items-center justify-center text-center py-20 overflow-hidden">
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] bg-green-500/10 blur-[160px] rounded-full -z-10"></div>
+
+  <div class="max-w-6xl px-6 w-full space-y-12">
+    <div class="flex items-center justify-center gap-4">
+      <div class="h-px w-6 bg-green-500/40"></div>
+      <span class="text-green-500 tracking-[0.5em] text-[10px] font-bold uppercase font-accent">
+        {DATA.profile.role}
+      </span>
+      <div class="h-px w-6 bg-green-500/40"></div>
+    </div>
+
+    <h1 class="text-6xl md:text-8xl lg:text-[10rem] uppercase font-brand tracking-normal leading-[0.85] select-none">
+      <span class="bg-linear-to-b from-white via-white to-white/50 bg-clip-text text-transparent">
+        {DATA.profile.firstName}
+      </span>
+    </h1>
+
+    <div class="max-w-3xl mx-auto space-y-8 pt-4">
+      <h2 class="text-white text-2xl md:text-4xl font-display font-medium leading-tight tracking-tight">
+        {DATA.profile.tagline}
+      </h2>
+
+      <div class="h-px w-12 bg-white/10 mx-auto my-6"></div>
+
+      <p class="text-gray-400 text-lg md:text-xl leading-relaxed max-w-xl mx-auto font-light">
+        {DATA.profile.description}
       </p>
-      <p>
-        Currently bringing ideas to life at
-        <a href="https://definedsolution.com" target="_blank" rel="noopener"
-          >Defined Solution <Icon
-            name="hugeicons:arrow-up-right-03"
-            class="inline"
-          /></a
-        >
-      </p>
-    </section>
-  </section>
-</hero-section>
+    </div>
 
-<script>
-  import { gsap } from "@/configs/gsap.config";
-
-  const initHero = () => {
-    const heroTimeline = gsap.timeline();
-
-    heroTimeline.from(
-      "#hero-image-container",
-      { x: -100, opacity: 0, ease: "power2.out" },
-      0.2
-    );
-
-    heroTimeline.from(
-      "#hero-section img",
-      { scale: 1.4, ease: "power2.out" },
-      0.6
-    );
-
-    heroTimeline.from(
-      "#hero-section h1",
-      { y: 50, opacity: 0, ease: "power2.out" },
-      1
-    );
-
-    heroTimeline.from(
-      "#hero-section p",
-      { y: 30, opacity: 0, ease: "power2.out" },
-      ">-0.4"
-    );
-  };
-
-  document.addEventListener("DOMContentLoaded", initHero);
-</script>
+    <div class="flex flex-wrap justify-center gap-x-8 gap-y-4 pt-6">
+      {DATA.profile.tags.map((tag) => (
+        <div class="flex items-center gap-3">
+          <span class="text-[10px] font-bold uppercase tracking-[0.3em] text-white/40 font-accent">
+            {tag}
+          </span>
+          <div class="w-1 h-1 rounded-full bg-green-500/30"></div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
