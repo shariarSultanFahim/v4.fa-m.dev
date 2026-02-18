@@ -2,10 +2,10 @@ export const DATA = {
   profile: {
     firstName: "Shariar",
     initials: "SF.",
-    role: "FULL STACK DEVELOPER",
+    role: "FULL STACK ENGINEER",
     tagline: "Building scalable solutions that bridge problems and outcomes.",
     description:
-      "Full-stack developer focused on real-world impact, from MVP delivery to production-ready systems.",
+      "Full-stack engineer focused on real-world impact, from MVP delivery to production-ready systems.",
     tags: ["React", "Next.js", "ExpressJs", "MongoDB"],
     github: "https://github.com/shariarSultanFahim",
     linkedin: "https://fa-m.dev/",
@@ -14,7 +14,7 @@ export const DATA = {
   },
   philosophy: {
     title: "Bridge the gap between problems and solutions.",
-    bio: "Full-stack developer experienced in shipping scalable systems that deliver measurable results.",
+    bio: "Full-stack engineer experienced in shipping scalable systems that deliver measurable results.",
     detail:
       "I focus on clarity, performance, and speed to value, including shipping MVPs fast and refining toward production quality.",
   },
