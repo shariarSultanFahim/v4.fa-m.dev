@@ -1,0 +1,281 @@
+---
+// ParticleSphere.astro - A client-side 3D interactive particle sphere background
+---
+
+<div
+  id="particle-sphere-container"
+  class="fixed inset-0 z-[-1] pointer-events-none"
+></div>
+
+<script>
+  import * as THREE from 'three';
+
+  const vertexShader = `
+    uniform float uTime;
+    uniform float uPixelRatio;
+    uniform float uSize;
+    uniform float uScroll;
+    uniform vec2 uMouse;
+    
+    attribute float size;
+    attribute vec3 color;
+    
+    varying vec3 vColor;
+    varying float vOpacity;
+
+    void main() {
+      vColor = color;
+      
+      // Dispersion effect: starts as a tight sphere, expands on scroll
+      vec3 newPosition = position * (1.0 + uScroll * 1.8);
+      
+      vec4 modelPosition = modelMatrix * vec4(newPosition, 1.0);
+      
+      // Subtle breathing animation
+      float pulse = sin(uTime * 0.5 + modelPosition.x * 0.5 + modelPosition.z * 0.3) * 0.12;
+      modelPosition.xyz += normalize(newPosition) * pulse;
+
+      // Mouse interaction
+      vec2 targetMouse = uMouse * 6.0;
+      float dist = distance(modelPosition.xy, targetMouse);
+      if (dist < 4.0) {
+        float force = (1.0 - dist / 4.0) * 0.6;
+        modelPosition.xyz += normalize(modelPosition.xyz) * force;
+      }
+
+      vec4 viewPosition = viewMatrix * modelPosition;
+      vec4 projectionPosition = projectionMatrix * viewPosition;
+
+      gl_Position = projectionPosition;
+      
+      // Perspective sizing + scroll-based size compensation
+      // As the sphere opens (uScroll increases), we increase the size to maintain impact
+      float sizeMultiplier = 1.0 + uScroll * 1.5;
+      gl_PointSize = uSize * size * uPixelRatio * sizeMultiplier;
+      gl_PointSize *= (1.0 / - viewPosition.z);
+      
+      // Increase opacity as it opens to compensate for dispersion
+      vOpacity = 0.5 + (uScroll * 0.4);
+    }
+  `;
+
+  const fragmentShader = `
+    varying vec3 vColor;
+    varying float vOpacity;
+
+    void main() {
+      float distanceToCenter = distance(gl_PointCoord, vec2(0.5));
+      
+      // Stable falloff with scroll-compensated intensity
+      float strength = 0.06 / (distanceToCenter + 0.01);
+      strength = pow(strength, 1.3);
+      strength *= (1.0 - distanceToCenter * 2.0);
+      
+      // Clamp to prevent blowout while keeping it bright
+      strength = clamp(strength, 0.0, 1.0);
+      
+      if (strength < 0.01) discard;
+      
+      // Boost vibrancy based on opacity (which tracks uScroll)
+      // This makes the individual "stars" pop more when they are spread out
+      float vibrancy = 1.0 + vOpacity * 0.8;
+      vec3 finalColor = vColor * vibrancy;
+      
+      gl_FragColor = vec4(finalColor, strength * vOpacity);
+    }
+  `;
+
+  const particleCount = 4000;
+  const starCount = 1500;
+
+  function initParticleSphere() {
+    const container = document.getElementById('particle-sphere-container');
+    console.log('[ParticleSphere] Container element:', container);
+    if (!container) return;
+
+    // Ensure we don't end up with multiple canvases on hot-reloads or transitions
+    container.innerHTML = '';
+
+    // Scene
+    const scene = new THREE.Scene();
+
+    // Camera
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera.position.z = 5;
+
+    // Renderer
+    const renderer = new THREE.WebGLRenderer({
+      alpha: true,
+      antialias: true,
+      powerPreference: "high-performance",
+      preserveDrawingBuffer: false
+    });
+    renderer.autoClear = true;
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setClearColor(0x000000, 0); // Explicitly clear with 0 alpha
+    renderer.domElement.style.display = 'block';
+    container.appendChild(renderer.domElement);
+    console.log('[ParticleSphere] Renderer appended successfully.');
+
+    // --- Sphere Particles ---
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+    const sizes = new Float32Array(particleCount);
+
+    for (let i = 0; i < particleCount; i++) {
+      const r = 1.4; // Tight core radius for a "closed" look initially
+      const theta = 2 * Math.PI * Math.random();
+      const phi = Math.acos(2 * Math.random() - 1);
+
+      positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+      positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+      positions[i * 3 + 2] = r * Math.cos(phi);
+
+      const mix = Math.random();
+      if (mix > 0.6) {
+        colors[i * 3] = 0.024; colors[i * 3 + 1] = 0.714; colors[i * 3 + 2] = 0.831; // Cyan
+      } else if (mix > 0.3) {
+        colors[i * 3] = 0.063; colors[i * 3 + 1] = 0.725; colors[i * 3 + 2] = 0.506; // Emerald
+      } else {
+        colors[i * 3] = 0.545; colors[i * 3 + 1] = 0.361; colors[i * 3 + 2] = 0.965; // Purple
+      }
+      sizes[i] = Math.random() * 2 + 0.5;
+    }
+
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+    const material = new THREE.ShaderMaterial({
+      vertexShader,
+      fragmentShader,
+      transparent: true,
+      blending: THREE.AdditiveBlending,
+      depthWrite: false,
+      uniforms: {
+        uTime: { value: 0 },
+        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+        uSize: { value: 55 },
+        uScroll: { value: 0 },
+        uMouse: { value: new THREE.Vector2(0, 0) }
+      }
+    });
+
+    const particles = new THREE.Points(geometry, material);
+    scene.add(particles);
+
+    // --- Background Starfield ---
+    const starPositions = new Float32Array(starCount * 3);
+    for (let i = 0; i < starCount; i++) {
+      starPositions[i * 3] = (Math.random() - 0.5) * 50;
+      starPositions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+      starPositions[i * 3 + 2] = (Math.random() - 0.5) * 50 - 10;
+    }
+    const starGeometry = new THREE.BufferGeometry();
+    starGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    const starMaterial = new THREE.PointsMaterial({
+      size: 0.015,
+      color: 0x94A3B8,
+      transparent: true,
+      opacity: 0.3,
+      sizeAttenuation: true
+    });
+    const stars = new THREE.Points(starGeometry, starMaterial);
+    scene.add(stars);
+
+    // Scroll state tracking
+    let targetScroll = 0;
+    let currentScroll = 0;
+
+    const handleScroll = () => {
+      targetScroll = Math.min(window.scrollY / 1000, 1.0);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    // Initial check
+    handleScroll();
+
+    // Mouse uniform tracking
+    const mouse = new THREE.Vector2(0, 0);
+    const handleMouseMove = (event: MouseEvent) => {
+      mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+
+    // Resize handling
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      material.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
+    };
+    window.addEventListener('resize', handleResize, { passive: true });
+
+    // Animation Loop
+    let frameId: number;
+    const clock = new THREE.Clock();
+
+    const animate = () => {
+      frameId = requestAnimationFrame(animate);
+      const elapsedTime = clock.getElapsedTime();
+
+      // Lerp/spring animation for scroll
+      currentScroll += (targetScroll - currentScroll) * 0.05;
+
+      // Update scroll uniforms & positions
+      const isHome = window.location.pathname === '/';
+      const p = isHome ? currentScroll : 0.8 + currentScroll * 0.2;
+      const scale = 1.0 + p * 1.2;
+
+      particles.scale.set(scale, scale, scale);
+      particles.position.z = 0;
+      material.uniforms.uScroll.value = p;
+      camera.position.z = 5 - p * 1;
+
+      // Update time & mouse uniforms
+      material.uniforms.uTime.value = elapsedTime;
+      material.uniforms.uMouse.value.lerp(mouse, 0.05);
+
+      // Rotations
+      particles.rotation.y += 0.0006;
+      particles.rotation.x += 0.0001;
+      stars.rotation.y -= 0.0001;
+
+      renderer.clear();
+      renderer.render(scene, camera);
+    };
+    animate();
+
+    // Cleanup function
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('resize', handleResize);
+      cancelAnimationFrame(frameId);
+      renderer.dispose();
+      geometry.dispose();
+      material.dispose();
+      starGeometry.dispose();
+      starMaterial.dispose();
+    };
+  }
+
+  // Handle initialization on load and Astro View Transitions if any
+  let cleanup: (() => void) | undefined;
+  
+  const start = () => {
+    if (cleanup) cleanup();
+    cleanup = initParticleSphere();
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start);
+  } else {
+    start();
+  }
+
+  document.addEventListener('astro:after-swap', start);
+</script>

@@ -6,7 +6,6 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px;
-  background-color: #050505;
 }
 
 body {
@@ -15,7 +14,7 @@ body {
     - Font family
     - Overflow handling
   */
-  @apply relative min-h-screen w-screen max-w-screen overflow-x-hidden font-sans bg-background text-white antialiased;
+  @apply relative min-h-screen w-screen max-w-screen overflow-x-hidden font-sans text-white antialiased;
 }
 
 strong {
