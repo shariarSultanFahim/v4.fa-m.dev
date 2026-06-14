@@ -6,9 +6,9 @@ export const DATA = {
     tagline: "Building scalable solutions that bridge problems and outcomes.",
     description:
       "Full-stack engineer focused on real-world impact, from MVP delivery to production-ready systems.",
-    tags: ["React", "Next.js", "ExpressJs", "MongoDB"],
+    tags: ["React", "Next.js", "ExpressJs", "MongoDB","NestJs", "Prisma","Docker", "Git/GitHub", "Postman", "Cloud Deployment", "Linux Basics"],
     github: "https://github.com/shariarSultanFahim",
-    linkedin: "https://fa-m.dev/",
+    linkedin: "https://www.linkedin.com/in/shariarsultan",
     email: "shariarsfahim@gmail.com",
     phone: "+8801711264984",
   },
@@ -35,25 +35,27 @@ export const DATA = {
   },
   skills: [
     {
-      label: "Professional",
-      items: ["ReactJS", "NextJS", "ExpressJS"],
+      label: "Frontend",
+      items: ["ReactJS", "NextJS", "AstroJs", "TailwindCss"],
     },
     {
-      label: "Expert",
-      items: ["AstroJS", "TailwindCSS", "Git"],
+      label: "Backend",
+      items: ["ExpressJs", "NestJs", "MongoDB", "Prisma ORM", "JWT"],
     },
     {
-      label: "Intermediate",
+      label: "Mobile & Desktop",
+      items: ["React Native", "ElectronJS"],
+    },
+    {
+      label: "DevOps & Tooling",
       items: [
         "Docker",
-        "NestJS",
-        "MongoDB",
-        "Prisma",
-        "React Native",
-        "ElectronJS",
+        "Git/GitHub",
+        "Postman",
+        "Cloud Deployment",
+        "Linux Basics",
       ],
     },
-    { label: "Learner", items: ["CI/CD", "DevOps"] },
   ],
   capabilities: [
     {
@@ -67,12 +69,29 @@ export const DATA = {
         "Built reusable UI libraries with Tailwind and Styled Components to speed feature delivery.",
     },
     {
+      title: "Responsive UI Design",
+      detail:
+        "Crafted mobile-first interfaces with Tailwind CSS, ensuring optimal layouts across all devices.",
+    },
+    {
       title: "API Orchestration",
       detail:
         "Implemented TanStack Query patterns for caching, sync, and optimistic UI updates.",
     },
   ],
   experience: [
+    {
+      role: "Jr. Full Stack Developer",
+      company: "Sparktech Agency",
+      period: "Feb 2026 - Present",
+      bullets: [
+        "Bridged the gap between business needs and technical execution by communicating directly with clients to define project scope and requirements.",
+        "Built high-performance, SEO-friendly user interfaces using Next.js, ensuring a responsive user experience.",
+        "Engineered secure and scalable backend systems using NestJS and Express.js.",
+        "Led R&D initiatives to solve complex technical challenges and modernize the tech stack.",
+        "Streamlined data flow by effectively managing API integrations between the server and client-side applications.",
+      ],
+    },
     {
       role: "Frontend Engineer",
       company: "Defined Solution",
@@ -98,7 +117,14 @@ export const DATA = {
       tag: "B2B2C",
       desc: "Next.js Frontend for a bike repair service with booking, real-time updates, and performance optimizations.",
       stack: ["Next.js", "Shadcn UI", "Tailwind CSS"],
-      link: "https://fixmincykel-dk-frontend.vercel.app",
+      link: "https://fixmincykel.dk",
+    },
+    {
+      title: "Hand-n-Handceremonies",
+      tag: "Full Stack / E-commerce",
+      desc: "Full Stack wedding ceremony booking platform with inventory management, real-time availability, and automated notifications.",
+      stack: ["Next.js", "Shadcn UI", "Tailwind CSS", "Prisma ORM"],
+      link: "https://hand-n-handceremonies.com",
     },
     {
       title: "Rise & Impact",
@@ -120,13 +146,6 @@ export const DATA = {
       desc: "Donor app + admin dashboard to connect donors, volunteers, and NGOs with automated reporting.",
       stack: ["React", "Dashboard", "Web"],
       link: "https://share-bite-donor-app-hackathon.vercel.app/",
-    },
-    {
-      title: "Real Time Chat Backend",
-      tag: "Backend / Realtime",
-      desc: "Realtime chat backend with authentication, JWT, and Socket integration.",
-      stack: ["Express", "MongoDB", "Socket"],
-      link: "https://github.com/shariarSultanFahim/ChatApp-Express-SocketIO",
     },
     {
       title: "Retail POS System",
@@ -165,7 +184,7 @@ export const DATA = {
     },
   ],
   socials: [
-    { name: "Email", link: "mailto:ashariarsfahim@gmail.com" },
+    { name: "Email", link: "mailto:shariarsfahim@gmail.com" },
     { name: "GitHub", link: "https://github.com/shariarSultanFahim" },
     { name: "LinkedIn", link: "https://www.linkedin.com/in/shariarsultan" },
   ],
